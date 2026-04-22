@@ -123,6 +123,10 @@ pageextension 70102 "Archived Sales Order Ext" extends "Sales Order Archive"
                     ApplicationArea = All;
                     ShowMandatory = true;
                 }
+                field("Blueprint"; Rec."Blueprint")
+                {
+                    ApplicationArea = All;
+                }
             }
 
             group(RightSide)

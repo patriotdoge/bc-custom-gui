@@ -132,6 +132,10 @@ pageextension 70101 "Sales Order Ext" extends "Sales Order"
                     ApplicationArea = All;
                     ShowMandatory = true;
                 }
+                field("Blueprint"; Rec."Blueprint")
+                {
+                    ApplicationArea = All;
+                }
             }
 
             group(RightSide)
