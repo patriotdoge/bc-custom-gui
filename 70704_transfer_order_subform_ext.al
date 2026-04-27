@@ -6,9 +6,5 @@ pageextension 70702 "Transfer Order Subform Ext." extends "Transfer Order Subfor
         {
             ShowMandatory = true;
         }
-        modify("Shortcut Dimension 2 Code")
-        {
-            ShowMandatory = true;
-        }
     }
 }
