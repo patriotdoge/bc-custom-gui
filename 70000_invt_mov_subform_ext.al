@@ -1,45 +1,44 @@
-pageextension 70000 InvtMovementSubformExt extends "Invt. Movement Subform"
+pageextension 70000 InvtMovementSubformExt extends "Internal Movement Subform"
 {
-    actions
+    layout
     {
-        addlast(Processing)
+        modify("Item No.")
         {
-            action("Fill Shelf No.")
+            Visible = false;
+        }
+        addafter("Item No.")
+        {
+            field("Item Search"; Rec."Item Search")
             {
                 ApplicationArea = All;
-                Caption = 'Fill Shelf No. from Item';
+                Caption = 'Item No.';
+                LookupPageId = "Bin Item Lookup";
 
-                trigger OnAction()
+                trigger OnValidate()
                 begin
-                    FillShelfNoFromItem();
+                    Rec.Validate("Item No.", Rec."Item Search");
+                    CurrPage.Update(true);
                 end;
             }
         }
     }
 
-    trigger OnOpenPage()
+    trigger OnAfterGetRecord()
     begin
-        // Auto-run when the subform opens
-        FillShelfNoFromItem();
+        Rec."Item Search" := Rec."Item No.";
     end;
 
-    local procedure FillShelfNoFromItem()
+    trigger OnNewRecord(BelowxRec: Boolean)
     var
-        WhseActLine: Record "Warehouse Activity Line";
-        ItemRec: Record Item;
+        InvtMovHeader: Record "Internal Movement Header";
     begin
-        WhseActLine.CopyFilters(Rec);
-
-        if WhseActLine.FindSet() then
-            repeat
-                if (WhseActLine."Item No." <> '') and
-                   ItemRec.Get(WhseActLine."Item No.") and
-                   (ItemRec."Shelf No." <> '') then begin
-                    if WhseActLine."Shelf No." <> ItemRec."Shelf No." then begin
-                        WhseActLine.Validate("Shelf No.", ItemRec."Shelf No.");
-                        WhseActLine.Modify();
-                    end;
-                end;
-            until WhseActLine.Next() = 0;
+        if Rec."No." = '' then
+            exit;
+        if not InvtMovHeader.Get(Rec."No.") then
+            exit;
+        if InvtMovHeader."From Bin Code" <> '' then
+            Rec.Validate("From Bin Code", InvtMovHeader."From Bin Code");
+        if InvtMovHeader."To Bin Code" <> '' then
+            Rec.Validate("To Bin Code", InvtMovHeader."To Bin Code");
     end;
 }
