@@ -1,4 +1,4 @@
-pageextension 70000 InvtMovementSubformExt extends "Internal Movement Subform"
+pageextension 70000 "Int. Mov. Subform Ext." extends "Internal Movement Subform"
 {
     layout
     {
