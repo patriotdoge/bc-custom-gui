@@ -15,5 +15,24 @@ pageextension 70501 "Purchase Order Header Ext." extends "Purchase Order"
                 ValidationMgt.ValidateAllLines(Rec);
             end;
         }
+
+        // Hide Print/Send actions until the document is Released.
+        // These are the real actions referenced by the Category_Category10 promoted group.
+        modify(Email)
+        {
+            Visible = Rec.Status = Rec.Status::Released;
+        }
+        modify("&Print")
+        {
+            Visible = Rec.Status = Rec.Status::Released;
+        }
+        modify(SendCustom)
+        {
+            Visible = Rec.Status = Rec.Status::Released;
+        }
+        modify(AttachAsPDF)
+        {
+            Visible = Rec.Status = Rec.Status::Released;
+        }
     }
 }
