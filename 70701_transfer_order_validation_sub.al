@@ -35,4 +35,14 @@ codeunit 70701 "Transfer Order Validation Sub."
         ValidationMgt.ValidateHeader(TransferHeader);
         ValidationMgt.ValidateAllLines(TransferHeader);
     end;
+
+    // -------------------------------------------------------------------------
+    // TRANSFER-FROM CODE — block location "EN" on manual input
+    // -------------------------------------------------------------------------
+    [EventSubscriber(ObjectType::Table, Database::"Transfer Header", 'OnAfterValidateEvent', 'Transfer-from Code', false, false)]
+    local procedure OnAfterValidateTransferFromCode(var Rec: Record "Transfer Header")
+    begin
+        if Rec."Transfer-from Code" = 'EN' then
+            Error('Location "EN" cannot be used as a Transfer-from location.');
+    end;
 }
