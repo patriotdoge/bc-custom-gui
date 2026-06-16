@@ -1,5 +1,7 @@
 codeunit 70904 "POD Tracking Sync"
 {
+    InherentPermissions = X;
+    Permissions = tabledata "Sales Shipment Header" = m;
     [EventSubscriber(ObjectType::Table, Database::"POD Document", 'OnAfterModifyEvent', '', false, false)]
     local procedure OnAfterPODDocModify(var Rec: Record "POD Document"; var xRec: Record "POD Document"; RunTrigger: Boolean)
     var
