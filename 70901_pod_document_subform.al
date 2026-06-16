@@ -3,7 +3,6 @@ page 70901 "POD Document Subform"
     Caption = 'POD Documents';
     PageType = ListPart;
     SourceTable = "POD Document";
-    Editable = false;
 
     layout
     {
@@ -14,6 +13,7 @@ page 70901 "POD Document Subform"
                 field("File Name"; Rec."File Name")
                 {
                     ApplicationArea = All;
+                    Editable = false;
                     ToolTip = 'Specifies the name of the uploaded file.';
                 }
                 field("Tracking No."; Rec."Tracking No.")
@@ -24,11 +24,13 @@ page 70901 "POD Document Subform"
                 field("Uploaded By"; Rec."Uploaded By")
                 {
                     ApplicationArea = All;
+                    Editable = false;
                     ToolTip = 'Specifies who uploaded the document.';
                 }
                 field("Uploaded At"; Rec."Uploaded At")
                 {
                     ApplicationArea = All;
+                    Editable = false;
                     ToolTip = 'Specifies when the document was uploaded.';
                 }
             }
