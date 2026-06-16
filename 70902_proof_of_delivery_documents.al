@@ -65,6 +65,26 @@ page 70902 "Proof of Delivery Documents"
     {
         area(Processing)
         {
+            action(SetTrackingNo)
+            {
+                ApplicationArea = All;
+                Caption = 'Set Tracking No.';
+                Image = Shipment;
+                ToolTip = 'Set the tracking number for all POD documents of the selected shipment.';
+
+                trigger OnAction()
+                var
+                    PODDoc: Record "POD Document";
+                begin
+                    PODDoc.SetRange("Shipment No.", Rec."No.");
+                    if not PODDoc.FindFirst() then begin
+                        Message('No POD documents found for this shipment.');
+                        exit;
+                    end;
+                    Page.RunModal(Page::"Set POD Tracking No.", PODDoc);
+                    CurrPage.PODDocuments.Page.Update(false);
+                end;
+            }
             action(UploadPOD)
             {
                 ApplicationArea = All;
@@ -93,6 +113,7 @@ page 70902 "Proof of Delivery Documents"
         }
         area(Promoted)
         {
+            actionref(SetTrackingNo_Promoted; SetTrackingNo) { }
             actionref(UploadPOD_Promoted; UploadPOD) { }
         }
     }
