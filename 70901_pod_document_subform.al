@@ -16,10 +16,10 @@ page 70901 "POD Document Subform"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the uploaded file.';
                 }
-                field(Description; Rec.Description)
+                field("Tracking No."; Rec."Tracking No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies a description of the document.';
+                    ToolTip = 'Specifies the tracking number for this document.';
                 }
                 field("Uploaded By"; Rec."Uploaded By")
                 {
