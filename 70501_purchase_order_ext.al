@@ -35,4 +35,17 @@ pageextension 70501 "Purchase Order Header Ext." extends "Purchase Order"
             Visible = Rec.Status = Rec.Status::Released;
         }
     }
+
+    trigger OnOpenPage()
+    var
+        UserPerms: Codeunit "User Permissions Helper";
+    begin
+        // Restricted POs are invisible to users outside the authorised permission sets.
+        // The gate is the single "Restrict Visibility" flag on the Purchase Header —
+        // this field is not surfaced on the PO itself; it is set from the Vendor Card.
+        if not UserPerms.HasPermissionSet('ADDV_FIN_TEAM_V1') and
+           not UserPerms.HasPermissionSet('ADDV STRA TEAM V1')
+        then
+            Rec.SetRange("Restrict Visibility", false);
+    end;
 }
