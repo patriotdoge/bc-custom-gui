@@ -39,10 +39,11 @@ page 70902 "Proof of Delivery Documents"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the customer name.';
                 }
-                field("Ship-to Name"; Rec."Ship-to Name")
+                field("Package Tracking No."; Rec."Package Tracking No.")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the delivery address name.';
+                    Caption = 'Tracking No.';
+                    ToolTip = 'Specifies the package tracking number for this shipment.';
                 }
                 field("External Document No."; Rec."External Document No.")
                 {
