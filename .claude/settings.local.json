@@ -7,7 +7,12 @@
       "Bash(grep -rln \"/\\\\*\" --include=*.al .)",
       "Bash(grep -rn \"^\\\\s*///\" --include=*.al .)",
       "Bash(grep -rn \"'[^']*//[^']*'\" --include=*.al .)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(python -)",
+      "Bash(awk '{print $1,$2}')",
+      "Bash(python -c \"import json; json.load\\(open\\('app.json'\\)\\); print\\('OK'\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\('.claude/settings.local.json'\\)\\); print\\('OK'\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\('.vscode/launch.json'\\)\\); print\\('OK'\\)\")"
     ]
   }
 }

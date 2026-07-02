@@ -139,11 +139,9 @@ tableextension 70060 "Item Security Ext" extends Item
 
     local procedure HasPermissionSet(PermissionSetId: Code[20]): Boolean
     var
-        AccessControl: Record "Access Control";
+        UserPermissionsHelper: Codeunit "User Permissions Helper";
     begin
-        AccessControl.SetRange("User Security ID", UserSecurityId());
-        AccessControl.SetRange("Role ID", PermissionSetId);
-        exit(not AccessControl.IsEmpty());
+        exit(UserPermissionsHelper.HasPermissionSet(PermissionSetId));
     end;
 
     local procedure HasFullAccess(): Boolean
