@@ -29,11 +29,11 @@ pageextension 70072 "Item Card Product Specs Ext" extends "Item Card"
                 {
                     ApplicationArea = All;
                 }
-                field("Option 24V-35A"; Rec."Option 24V-35A")
+                field("Option HVDC"; Rec."Option HVDC")
                 {
                     ApplicationArea = All;
                 }
-                field("Option HVDC"; Rec."Option HVDC")
+                field("Option 24V-34V"; Rec."Option 24V-34V")
                 {
                     ApplicationArea = All;
                 }

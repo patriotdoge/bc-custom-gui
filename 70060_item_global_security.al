@@ -19,28 +19,24 @@ tableextension 70060 "Item Security Ext" extends Item
 
     local procedure EnforceItemSecurity()
     begin
-        // CRITICAL: Production/Purchasing Blocked - FULL ACCESS ONLY
         if BlockedFieldsChanged() then
             if not HasFullAccess() then
                 Error('You are not allowed to modify Production/Purchasing Blocked fields.');
 
-        // LOG team: Inventory + Warehouse FastTabs
         if InventoryFieldsChanged() or WarehouseFieldsChanged() then
             if not HasPermissionSet('ADDV_LOG_TEAM_V1') and not HasFullAccess() then
                 Error('You are not allowed to modify Inventory or Warehouse fields.');
 
-        // PUR team: Replenishment + Planning FastTabs
         if ReplenishmentFieldsChanged() or PlanningFieldsChanged() then
             if not HasPermissionSet('ADDV_PUR_TEAM_V1') and not HasFullAccess() then
                 Error('You are not allowed to modify Replenishment or Planning fields.');
 
-        // PRICE edit: Costs & Posting / Prices & Sales
         if PriceFieldsChanged() then
             if not HasPriceEditAccess() then
                 Error('You are not allowed to modify item prices.');
     end;
 
-    local procedure BlockedFieldsChanged(): Boolean  // NEW - Full Access Only
+    local procedure BlockedFieldsChanged(): Boolean
     begin
         exit(
             ("Purchasing Blocked" <> xRec."Purchasing Blocked") or

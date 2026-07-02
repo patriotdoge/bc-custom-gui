@@ -19,7 +19,6 @@ codeunit 70502 "Purch. Order Validation Mgt."
         CostCenterDimCode: Code[20];
         CostCenterValue: Code[20];
     begin
-        // Skip extended text / comment lines (Type = " ")
         if PurchLine.Type = PurchLine.Type::" " then
             exit;
 

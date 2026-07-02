@@ -1,47 +1,29 @@
 codeunit 70101 "MyAddvolt Sales Validation"
 {
-    // -------------------------------------------------------------------------
-    // POST — fires before Codeunit 80 "Sales-Post" processes the document
-    // -------------------------------------------------------------------------
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnBeforePostSalesDoc', '', false, false)]
     local procedure OnBeforePostSalesDoc(var SalesHeader: Record "Sales Header")
     begin
         ValidateMyAddvoltFields(SalesHeader);
     end;
 
-    // -------------------------------------------------------------------------
-    // RELEASE — fires before Codeunit 414 "Release Sales Document"
-    // -------------------------------------------------------------------------
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnBeforeReleaseSalesDoc', '', false, false)]
     local procedure OnBeforeReleaseSalesDoc(var SalesHeader: Record "Sales Header")
     begin
         ValidateMyAddvoltFields(SalesHeader);
     end;
 
-    // -------------------------------------------------------------------------
-    // REQUEST APPROVAL — called explicitly from OnBeforeAction on the page
-    // action in pageextension 70103, which fires before the workflow dispatches
-    // the approval notification. A subscriber on OnSendSalesDocForApproval
-    // fires too late (after the "request sent" dialog), so we use the page
-    // action trigger instead, same pattern as pageextension 70501 for PO.
-    // -------------------------------------------------------------------------
     procedure ValidateForApproval(var SalesHeader: Record "Sales Header")
     begin
         ValidateMyAddvoltFields(SalesHeader);
     end;
 
-    // -------------------------------------------------------------------------
-    // CORE VALIDATION — single source of truth for all three entry points
-    // -------------------------------------------------------------------------
     local procedure ValidateMyAddvoltFields(var SalesHeader: Record "Sales Header")
     var
         SalesLine: Record "Sales Line";
     begin
-        // Only for Sales Orders
         if SalesHeader."Document Type" <> SalesHeader."Document Type"::Order then
             exit;
 
-        // ALWAYS REQUIRED: Standard header fields
         SalesHeader.TestField("External Document No.");
         SalesHeader.TestField("Salesperson Code");
         SalesHeader.TestField("Requested Delivery Date");
@@ -56,13 +38,10 @@ codeunit 70101 "MyAddvolt Sales Validation"
         SalesHeader.TestField("Shipping Agent Code");
         SalesHeader.TestField("Shipping Agent Service Code");
 
-        // ALWAYS REQUIRED: At least one attachment
         ValidateAttachments(SalesHeader);
 
-        // ALWAYS REQUIRED: Shortcut Dimension 1 Code on every non-comment line
         ValidateSalesLines(SalesHeader);
 
-        // CONDITIONAL: KAM fields only if AA Item exists
         SalesLine.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         SalesLine.SetRange(Type, SalesLine.Type::Item);
@@ -70,7 +49,6 @@ codeunit 70101 "MyAddvolt Sales Validation"
         if SalesLine.IsEmpty then
             exit;
 
-        // AA Item found → require KAM fields
         SalesHeader.TestField("Vehicle Type");
         SalesHeader.TestField("Engine Type");
         SalesHeader.TestField("Battery Voltage");
@@ -97,7 +75,6 @@ codeunit 70101 "MyAddvolt Sales Validation"
         SalesLine.SetRange("Document No.", SalesHeader."No.");
         if SalesLine.FindSet() then
             repeat
-                // Skip comment / blank-type lines
                 if SalesLine.Type <> SalesLine.Type::" " then
                     if SalesLine."Shortcut Dimension 1 Code" = '' then
                         Error(

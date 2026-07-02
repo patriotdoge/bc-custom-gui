@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(git log *)",
-      "Bash(git show *)"
+      "Bash(git show *)",
+      "Bash(grep -rn \"//\" --include=*.al .)",
+      "Bash(grep -rln \"/\\\\*\" --include=*.al .)",
+      "Bash(grep -rn \"^\\\\s*///\" --include=*.al .)",
+      "Bash(grep -rn \"'[^']*//[^']*'\" --include=*.al .)",
+      "Bash(git add *)"
     ]
   }
 }

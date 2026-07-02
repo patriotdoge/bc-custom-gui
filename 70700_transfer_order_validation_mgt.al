@@ -23,7 +23,6 @@ codeunit 70700 "Transfer Order Validation Mgt."
 
     procedure ValidateTransferLine(TransferLine: Record "Transfer Line")
     begin
-        // Skip blank / comment lines (no item assigned)
         if TransferLine."Item No." = '' then
             exit;
 

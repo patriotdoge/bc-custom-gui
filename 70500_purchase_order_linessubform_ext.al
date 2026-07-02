@@ -20,9 +20,6 @@ pageextension 70500 "Purch. Order Subform Ext." extends "Purchase Order Subform"
         Rec.CalcFields("Carrier P/N");
     end;
 
-    // OnModifyRecord removed — validation is now handled at Release,
-    // Request Approval, and Post via event subscribers in Codeunit 70503.
-    // This prevents Extended Text auto-insertion from being blocked mid-insert.
 
     procedure ValidateAllLines()
     var
